@@ -87,7 +87,7 @@ Wire up the route and the logic (add files under `server/src/services/` as you l
 Finish `web/src/pages/RulesPage.tsx`: preview table, empty state, Apply with all its states.
 💡 *Hint: users double-click, networks fail, and someone else edits bids while you're looking.*
 
-### 5 · SHOULD — New rule form: SPEC §5 and §6 (full stack)
+### 5 · STRETCH — New rule form: SPEC §5 and §6 (full stack)
 `POST /api/rules` on the server, and a form on the Rules page that matches the design in
 [`docs/design/`](docs/design/) on a laptop and on a phone.
 💡 *Hint: dollars typed by a person must become exact cents. A form is for keyboard and screen-reader users too.*
