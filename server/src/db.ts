@@ -74,6 +74,14 @@ export const db = {
   rules: {
     findAll: () => query(() => state.rules),
     findById: (id: string) => query(() => state.rules.find((r) => r.id === id) ?? null),
+    /** Stores a new rule. The caller picks a unique `id`. */
+    async insert(rule: Rule): Promise<Rule> {
+      queryCount++;
+      await io();
+      if (state.rules.some((r) => r.id === rule.id)) throw new Error(`Rule ${rule.id} already exists`);
+      state.rules.push(structuredClone(rule));
+      return structuredClone(rule);
+    },
   },
 
   /** Durable key-value store for idempotency records. Values must be JSON-serialisable. */

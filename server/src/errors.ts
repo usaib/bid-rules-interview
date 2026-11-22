@@ -8,6 +8,8 @@ export class HttpError extends Error {
     public readonly status: number,
     public readonly code: ErrorCode,
     message: string,
+    /** Per-field messages for `VALIDATION_ERROR` (see ApiErrorBody). */
+    public readonly fields?: Record<string, string>,
   ) {
     super(message);
   }
@@ -27,8 +29,8 @@ export function validate<T extends z.ZodType>(schema: T, value: unknown): z.infe
   return result.data;
 }
 
-export function errorBody(code: ErrorCode, message: string): ApiErrorBody {
-  return { error: { code, message } };
+export function errorBody(code: ErrorCode, message: string, fields?: Record<string, string>): ApiErrorBody {
+  return { error: fields ? { code, message, fields } : { code, message } };
 }
 
 export const notFoundHandler: RequestHandler = (req, res) => {
@@ -37,7 +39,7 @@ export const notFoundHandler: RequestHandler = (req, res) => {
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof HttpError) {
-    res.status(err.status).json(errorBody(err.code, err.message));
+    res.status(err.status).json(errorBody(err.code, err.message, err.fields));
     return;
   }
   if (err?.type === 'entity.parse.failed') {

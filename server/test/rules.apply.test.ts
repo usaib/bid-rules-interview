@@ -12,7 +12,7 @@ function load() {
     campaigns: [campaign({ id: 'c1' })],
     keywords: [keyword({ id: 'k1', bidCents: 200, version: 1 })],
     metrics: [metric({ keywordId: 'k1', date: '2026-11-18', clicks: 50, spendCents: 2000, salesCents: 4000 })],
-    rules: [rule({ id: 'r1', campaignId: 'c1', minClicks: 10, acosAbove: 0.3, bidChangePct: -25 })],
+    rules: [rule({ id: 'r1', campaignId: 'c1', minClicks: 10, costRatioAbove: 0.3, bidChangePct: -25 })],
   });
 }
 

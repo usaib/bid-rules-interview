@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { CampaignSummary, KeywordWithMetrics } from '@bidrules/shared';
 import { getCampaigns, searchKeywords } from '../api';
-import { formatAcos, formatCents } from '../format';
+import { formatCents, formatRatio } from '../format';
 
 export function KeywordsPage() {
   const [campaigns, setCampaigns] = useState<CampaignSummary[]>([]);
@@ -39,27 +39,28 @@ export function KeywordsPage() {
         </p>
       </div>
       <div className="toolbar">
-        <label>
-          Campaign
-          <select value={campaignId} onChange={(e) => setCampaignId(e.target.value)}>
-            {campaigns.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Search keywords
+        <select value={campaignId} onChange={(e) => setCampaignId(e.target.value)}>
+          {campaigns.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
+        </select>
+        <div className="search">
           <input
             type="search"
-            placeholder="Filter by keyword text"
+            placeholder="Search keywords"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        </label>
+          {query && (
+            <span className="icon-button" onClick={() => setQuery('')}>
+              ×
+            </span>
+          )}
+        </div>
       </div>
-      {error && <p role="alert">{error}</p>}
+      {error && <p className="error-text">{error}</p>}
       <div className="table-wrap">
         <table aria-label="Keywords">
           <thead>
@@ -70,7 +71,7 @@ export function KeywordsPage() {
               <th className="num">Bid</th>
               <th className="num">Clicks</th>
               <th className="num">Spend</th>
-              <th className="num">ACoS</th>
+              <th className="num">Cost ratio</th>
             </tr>
           </thead>
           <tbody>
@@ -81,12 +82,12 @@ export function KeywordsPage() {
                   <span className="tag">{k.matchType}</span>
                 </td>
                 <td>
-                  <span className={`status status-${k.status}`}>{k.status}</span>
+                  <span className={`dot dot-${k.status}`} title={k.status} />
                 </td>
                 <td className="num">{formatCents(k.bidCents)}</td>
                 <td className="num">{k.clicks}</td>
                 <td className="num">{formatCents(k.spendCents)}</td>
-                <td className="num">{formatAcos(k.acos)}</td>
+                <td className="num">{formatRatio(k.costRatio)}</td>
               </tr>
             ))}
           </tbody>

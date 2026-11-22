@@ -11,7 +11,7 @@ These apply to all code in this repo. Reviewers check them.
 ## Time and dates
 - Server code reads the current time **only** through `now()` from `server/src/clock.ts`
   (tests freeze it with `setNowForTests`). Don't call `new Date()` / `Date.now()` for "now".
-- Reporting dates are marketplace days (`America/Los_Angeles`) formatted `YYYY-MM-DD`.
+- Reporting dates are reporting days (Los Angeles time, `America/Los_Angeles`) formatted `YYYY-MM-DD`.
   Use the helpers in `server/src/dates.ts`. Don't use `toISOString()` to get "today".
 
 ## Errors
@@ -37,9 +37,13 @@ These apply to all code in this repo. Reviewers check them.
 
 ## Frontend
 - All HTTP calls go through `web/src/api.ts`. Components never call `fetch`.
-- `ApiError` carries `status` and `code`; branch on `code`, not on message text.
+- `ApiError` carries `status`, `code` and `fields`; branch on `code`, not on message text.
 - Use accessible markup: real `<label>`s, `<button>`s, `<table>`s, `role="alert"` for errors,
   `role="status"` for success messages.
+- Anything clickable is a `<button>` (or a link), so it works from the keyboard. A button that only
+  shows an icon needs an accessible name (`aria-label`).
+- Never show meaning with colour alone; add text.
+- Plain CSS in `web/src/styles.css` (no UI library). Pages must work from 360px wide up.
 
 ## Tests
 - Vitest everywhere. Server tests use supertest against `createApp()` and `loadDataset(...)` fixtures.

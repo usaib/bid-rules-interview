@@ -2,11 +2,11 @@ import type { BidChange, CampaignSummary, PreviewResponse, Rule } from '@bidrule
 
 export const ruleFixture = (o: Partial<Rule> = {}): Rule => ({
   id: 'r1',
-  name: 'Cut high-ACoS bids',
+  name: 'Cut high-cost bids',
   campaignId: 'c1',
   lookbackDays: 7,
   minClicks: 10,
-  acosAbove: 0.3,
+  costRatioAbove: 0.3,
   bidChangePct: -10,
   minBidCents: 5,
   maxBidCents: 500,
@@ -20,7 +20,7 @@ export const changeFixture = (o: Partial<BidChange> = {}): BidChange => ({
   clicks: 30,
   spendCents: 1500,
   salesCents: 3000,
-  acos: 0.5,
+  costRatio: 0.5,
   currentBidCents: 100,
   newBidCents: 90,
   ...o,
@@ -40,6 +40,6 @@ export const campaignFixture = (o: Partial<CampaignSummary> = {}): CampaignSumma
   clicks: 120,
   spendCents: 4567,
   salesCents: 12000,
-  acos: 0.380583,
+  costRatio: 0.380583,
   ...o,
 });

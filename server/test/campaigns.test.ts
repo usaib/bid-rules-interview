@@ -30,7 +30,7 @@ describe('GET /api/campaigns', () => {
     expect(res.status).toBe(200);
     expect(res.body.window).toEqual({ from: '2026-11-13', to: '2026-11-19' });
     expect(res.body.campaigns).toEqual([
-      expect.objectContaining({ id: 'c1', clicks: 15, spendCents: 750, salesCents: 3000, acos: 0.25 }),
+      expect.objectContaining({ id: 'c1', clicks: 15, spendCents: 750, salesCents: 3000, costRatio: 0.25 }),
     ]);
   });
 
@@ -49,7 +49,7 @@ describe('GET /api/campaigns', () => {
   });
 
   // Reproduces support ticket SUP-1432 (see README → "Bug report").
-  it('reports the same ACoS as the Amazon console for a multi-day window', async () => {
+  it('reports the same cost ratio as the ad platform report for a multi-day window', async () => {
     loadDataset({
       campaigns: [campaign({ id: 'c1', name: 'Holiday Gifts - SP' })],
       keywords: [keyword({ id: 'k1', campaignId: 'c1' })],
@@ -61,7 +61,7 @@ describe('GET /api/campaigns', () => {
 
     const res = await request(app).get('/api/campaigns');
 
-    // Amazon console: spend $11.00 / sales $30.00 = 36.7%
-    expect(res.body.campaigns[0].acos).toBeCloseTo(1100 / 3000, 6);
+    // Ad platform report: spend $11.00 / sales $30.00 = 36.7%
+    expect(res.body.campaigns[0].costRatio).toBeCloseTo(1100 / 3000, 6);
   });
 });

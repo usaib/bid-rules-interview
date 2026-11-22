@@ -10,10 +10,10 @@ vi.mock('../../api', async (importOriginal) => ({
 }));
 
 describe('<CampaignsPage />', () => {
-  it('renders campaign rows with formatted money and ACoS', async () => {
+  it('renders campaign rows with formatted money and cost ratio', async () => {
     vi.mocked(api.getCampaigns).mockResolvedValue({
       window: { from: '2026-11-13', to: '2026-11-19' },
-      campaigns: [campaignFixture(), campaignFixture({ id: 'c2', name: 'Brand Defense', salesCents: 0, acos: null })],
+      campaigns: [campaignFixture(), campaignFixture({ id: 'c2', name: 'Brand Defense', salesCents: 0, costRatio: null })],
     });
 
     render(<CampaignsPage />);

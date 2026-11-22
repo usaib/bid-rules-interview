@@ -48,6 +48,13 @@ export function RulesPage() {
         <button className="primary" onClick={handlePreview} disabled={!ruleId}>
           Preview
         </button>
+        <button
+          onClick={() => {
+            // TODO(candidate): open the New rule form (docs/SPEC.md §5 and docs/design/).
+          }}
+        >
+          New rule
+        </button>
       </div>
       {selected && <p className="rule-summary">{describeRule(selected)}</p>}
       {error && <p role="alert">{error}</p>}

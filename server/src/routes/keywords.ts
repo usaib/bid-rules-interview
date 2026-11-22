@@ -4,7 +4,7 @@ import type { KeywordListResponse, KeywordWithMetrics } from '@bidrules/shared';
 import { db } from '../db';
 import { lookbackWindow } from '../dates';
 import { notFound, validate } from '../errors';
-import { acosOf, sumMetrics } from '../services/metrics';
+import { costRatioOf, sumMetrics } from '../services/metrics';
 
 export const keywordsRouter = Router({ mergeParams: true });
 
@@ -28,7 +28,7 @@ keywordsRouter.get('/', async (req, res) => {
   const result: KeywordWithMetrics[] = [];
   for (const keyword of keywords) {
     const totals = sumMetrics(await db.metrics.findByKeyword(keyword.id, window));
-    result.push({ ...keyword, ...totals, acos: acosOf(totals) });
+    result.push({ ...keyword, ...totals, costRatio: costRatioOf(totals) });
   }
 
   const body: KeywordListResponse = { window, keywords: result };

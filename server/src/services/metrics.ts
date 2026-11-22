@@ -17,8 +17,8 @@ export function sumMetrics(metrics: DailyMetric[]): Totals {
   );
 }
 
-/** ACoS = ad spend / ad sales. `null` when there are no sales. */
-export function acosOf(totals: Pick<Totals, 'spendCents' | 'salesCents'>): number | null {
+/** Cost ratio = ad spend / ad sales. `null` when there are no sales. */
+export function costRatioOf(totals: Pick<Totals, 'spendCents' | 'salesCents'>): number | null {
   return totals.salesCents > 0 ? totals.spendCents / totals.salesCents : null;
 }
 
@@ -30,9 +30,9 @@ export function summarizeCampaign(campaign: Campaign, metrics: DailyMetric[]): C
     byDay.set(m.date, [...(byDay.get(m.date) ?? []), m]);
   }
   const dailyAcos = [...byDay.values()]
-    .map((day) => acosOf(sumMetrics(day)))
+    .map((day) => costRatioOf(sumMetrics(day)))
     .filter((v): v is number => v !== null);
-  const acos = dailyAcos.length > 0 ? dailyAcos.reduce((a, b) => a + b, 0) / dailyAcos.length : null;
+  const costRatio = dailyAcos.length > 0 ? dailyAcos.reduce((a, b) => a + b, 0) / dailyAcos.length : null;
 
   return {
     id: campaign.id,
@@ -40,6 +40,6 @@ export function summarizeCampaign(campaign: Campaign, metrics: DailyMetric[]): C
     status: campaign.status,
     dailyBudgetCents: campaign.dailyBudgetCents,
     ...totals,
-    acos,
+    costRatio,
   };
 }

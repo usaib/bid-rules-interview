@@ -17,7 +17,7 @@ describe('POST /api/rules/:id/preview', () => {
     expect(res.body).toEqual({ error: { code: 'NOT_FOUND', message: expect.any(String) } });
   });
 
-  it('lowers bids for keywords over the ACoS threshold and leaves the rest alone', async () => {
+  it('lowers bids for keywords over the cost ratio threshold and leaves the rest alone', async () => {
     loadDataset({
       campaigns: [campaign({ id: 'c1' })],
       keywords: [
@@ -25,12 +25,12 @@ describe('POST /api/rules/:id/preview', () => {
         keyword({ id: 'k2', text: 'good keyword', bidCents: 100 }),
       ],
       metrics: [
-        // k1: ACoS 50%, 30 clicks → matches
+        // k1: Cost ratio 50%, 30 clicks → matches
         metric({ keywordId: 'k1', date: '2026-11-18', clicks: 30, spendCents: 1500, salesCents: 3000 }),
-        // k2: ACoS 10% → does not match
+        // k2: Cost ratio 10% → does not match
         metric({ keywordId: 'k2', date: '2026-11-18', clicks: 30, spendCents: 300, salesCents: 3000 }),
       ],
-      rules: [rule({ id: 'r1', campaignId: 'c1', minClicks: 20, acosAbove: 0.3, bidChangePct: -10 })],
+      rules: [rule({ id: 'r1', campaignId: 'c1', minClicks: 20, costRatioAbove: 0.3, bidChangePct: -10 })],
     });
 
     const res = await request(app).post('/api/rules/r1/preview');
@@ -47,7 +47,7 @@ describe('POST /api/rules/:id/preview', () => {
           clicks: 30,
           spendCents: 1500,
           salesCents: 3000,
-          acos: 0.5,
+          costRatio: 0.5,
           currentBidCents: 100,
           newBidCents: 90,
         },

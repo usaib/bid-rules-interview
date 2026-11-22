@@ -32,11 +32,11 @@ const CAMPAIGNS: Array<Campaign & { words: string[] }> = [
 ];
 
 const MATCH_TYPES = ['exact', 'phrase', 'broad'] as const;
-const RESTATED = new Set(['c1', 'c2']);
+const CORRECTED = new Set(['c1', 'c2']);
 
 export function buildSeed(): Dataset {
   const rand = mulberry32(42);
-  const restateRand = mulberry32(7); // separate stream so the base data stays stable
+  const correctionRand = mulberry32(7); // separate stream so the base data stays stable
   const today = marketplaceDate(now());
   const campaigns: Campaign[] = [];
   const keywords: Keyword[] = [];
@@ -73,9 +73,9 @@ export function buildSeed(): Dataset {
           orders,
           reportedAt: `${addDays(date, 1)}T10:00:00Z`,
         };
-        // Amazon restates recent days as late conversions arrive: the first report undercounts
+        // The ad platform corrects recent days as late sales arrive: the first report undercounts
         // orders, a later one carries the final numbers.
-        if (RESTATED.has(campaign.id) && back >= 3 && orders > 0 && restateRand() < 0.4) {
+        if (CORRECTED.has(campaign.id) && back >= 3 && orders > 0 && correctionRand() < 0.4) {
           const earlyOrders = orders - 1;
           metrics.push({ ...row, orders: earlyOrders, salesCents: Math.round((row.salesCents * earlyOrders) / orders) });
           row.reportedAt = `${addDays(date, 3)}T10:00:00Z`;
@@ -86,11 +86,11 @@ export function buildSeed(): Dataset {
   }
 
   const rules: Rule[] = [
-    { id: 'r1', name: 'Holiday: cut bids on high-ACoS keywords', campaignId: 'c1', lookbackDays: 7, minClicks: 20, acosAbove: 0.35, bidChangePct: -15, minBidCents: 10, maxBidCents: 400 },
-    { id: 'r2', name: 'Kitchen: trim unprofitable keywords', campaignId: 'c2', lookbackDays: 7, minClicks: 15, acosAbove: 0.4, bidChangePct: -20, minBidCents: 5, maxBidCents: 300 },
-    { id: 'r3', name: 'Holiday: aggressive 14-day cut', campaignId: 'c1', lookbackDays: 14, minClicks: 10, acosAbove: 0.25, bidChangePct: -70, minBidCents: 10, maxBidCents: 400 },
-    { id: 'r4', name: 'Brand defense: raise bids', campaignId: 'c3', lookbackDays: 7, minClicks: 5, acosAbove: 0.05, bidChangePct: 25, minBidCents: 10, maxBidCents: 250 },
-    { id: 'r5', name: 'Clearance: cut bids', campaignId: 'c4', lookbackDays: 7, minClicks: 1, acosAbove: 0.1, bidChangePct: -10, minBidCents: 5, maxBidCents: 200 },
+    { id: 'r1', name: 'Holiday: cut bids on high-cost keywords', campaignId: 'c1', lookbackDays: 7, minClicks: 20, costRatioAbove: 0.35, bidChangePct: -15, minBidCents: 10, maxBidCents: 400 },
+    { id: 'r2', name: 'Kitchen: trim unprofitable keywords', campaignId: 'c2', lookbackDays: 7, minClicks: 15, costRatioAbove: 0.4, bidChangePct: -20, minBidCents: 5, maxBidCents: 300 },
+    { id: 'r3', name: 'Holiday: aggressive 14-day cut', campaignId: 'c1', lookbackDays: 14, minClicks: 10, costRatioAbove: 0.25, bidChangePct: -70, minBidCents: 10, maxBidCents: 400 },
+    { id: 'r4', name: 'Brand defense: raise bids', campaignId: 'c3', lookbackDays: 7, minClicks: 5, costRatioAbove: 0.05, bidChangePct: 25, minBidCents: 10, maxBidCents: 250 },
+    { id: 'r5', name: 'Clearance: cut bids', campaignId: 'c4', lookbackDays: 7, minClicks: 1, costRatioAbove: 0.1, bidChangePct: -10, minBidCents: 5, maxBidCents: 200 },
   ];
 
   return { campaigns, keywords, metrics, rules };

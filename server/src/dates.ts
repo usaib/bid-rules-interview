@@ -1,7 +1,7 @@
 import type { DateWindow } from '@bidrules/shared';
 import { now } from './clock';
 
-/** All reporting is done in the marketplace's local time (Amazon US). */
+/** All reporting is done in the marketplace's local time (US store, Los Angeles time). */
 export const MARKETPLACE_TZ = 'America/Los_Angeles';
 
 const formatter = new Intl.DateTimeFormat('en-US', {
@@ -24,7 +24,7 @@ export function addDays(ymd: string, days: number): string {
 
 /**
  * The `days` full marketplace days before today. Today is excluded because
- * Amazon reports for the current day are incomplete.
+ * Reports for the current day are incomplete.
  */
 export function lookbackWindow(days: number, instant: Date = now()): DateWindow {
   const today = marketplaceDate(instant);

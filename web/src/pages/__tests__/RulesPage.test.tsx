@@ -26,7 +26,7 @@ describe('<RulesPage />', () => {
     const row = await screen.findByRole('row', { name: /gift for dad/ });
     expect(within(row).getByText('$1.00')).toBeInTheDocument(); // current bid
     expect(within(row).getByText('$0.90')).toBeInTheDocument(); // new bid
-    expect(within(row).getByText('50.0%')).toBeInTheDocument(); // ACoS
+    expect(within(row).getByText('50.0%')).toBeInTheDocument(); // Cost ratio
     expect(api.previewRule).toHaveBeenCalledWith('r1');
   });
 

@@ -12,6 +12,12 @@ rulesRouter.get('/', async (_req, res) => {
   res.json(body);
 });
 
+/** POST /api/rules — create a rule. See docs/SPEC.md §6. */
+rulesRouter.post('/', async (_req, _res) => {
+  // TODO(candidate): implement.
+  throw new HttpError(501, 'NOT_IMPLEMENTED', 'POST /api/rules is not implemented yet');
+});
+
 /** POST /api/rules/:id/preview — see docs/SPEC.md §2. */
 rulesRouter.post('/:id/preview', async (req, res) => {
   const rule = await db.rules.findById(req.params.id);

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { CampaignListResponse, SortKey, SortOrder } from '@bidrules/shared';
 import { getCampaigns } from '../api';
-import { formatAcos, formatCents } from '../format';
+import { formatRatio, formatCents } from '../format';
 
 const COLUMNS: Array<{ key: SortKey; label: string; numeric?: boolean }> = [
   { key: 'name', label: 'Campaign' },
   { key: 'spendCents', label: 'Spend', numeric: true },
   { key: 'salesCents', label: 'Sales', numeric: true },
-  { key: 'acos', label: 'ACoS', numeric: true },
+  { key: 'costRatio', label: 'Cost ratio', numeric: true },
 ];
 
 export function CampaignsPage() {
@@ -81,7 +81,7 @@ export function CampaignsPage() {
                   <td>{c.name}</td>
                   <td className="num">{formatCents(c.spendCents)}</td>
                   <td className="num">{formatCents(c.salesCents)}</td>
-                  <td className="num">{formatAcos(c.acos)}</td>
+                  <td className="num">{formatRatio(c.costRatio)}</td>
                   <td className="num">{c.clicks.toLocaleString('en-US')}</td>
                   <td className="num">{formatCents(c.dailyBudgetCents)}</td>
                   <td>

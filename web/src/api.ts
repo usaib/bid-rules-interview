@@ -6,9 +6,11 @@ import type {
   ApplyRequest,
   ApplyResponse,
   CampaignListResponse,
+  CreateRuleRequest,
   ErrorCode,
   KeywordListResponse,
   PreviewResponse,
+  Rule,
   RuleListResponse,
   SortKey,
   SortOrder,
@@ -20,6 +22,8 @@ export class ApiError extends Error {
     public readonly status: number,
     public readonly code: ErrorCode | 'NETWORK',
     message: string,
+    /** Per-field messages on `VALIDATION_ERROR`, keyed by request field name. */
+    public readonly fields: Record<string, string> = {},
   ) {
     super(message);
     this.name = 'ApiError';
@@ -43,6 +47,7 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
       res.status,
       body?.error?.code ?? 'INTERNAL',
       body?.error?.message ?? `Request failed with status ${res.status}`,
+      body?.error?.fields ?? {},
     );
   }
   return body as T;
@@ -61,6 +66,10 @@ export function searchKeywords(campaignId: string, q: string, signal?: AbortSign
 
 export function getRules() {
   return request<RuleListResponse>('/rules');
+}
+
+export function createRule(body: CreateRuleRequest) {
+  return request<Rule>('/rules', { method: 'POST', body: JSON.stringify(body) });
 }
 
 export function previewRule(ruleId: string) {

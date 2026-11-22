@@ -39,9 +39,9 @@ export interface DailyMetric {
   salesCents: number;
   orders: number;
   /**
-   * When Amazon produced this row (ISO instant). Amazon re-sends ("restates") recent days as late
-   * conversions come in, so a keyword can have several rows for the same date. Only the row with the
-   * latest `reportedAt` counts; older rows for that keyword and date are superseded.
+   * When the ad platform produced this row (ISO instant). The platform sends corrected numbers for recent
+   * days as late sales come in, so a keyword can have several rows for the same date. Only the row with
+   * the latest `reportedAt` counts; older rows for that keyword and date are out of date.
    */
   reportedAt: string;
 }
@@ -54,8 +54,8 @@ export interface Rule {
   lookbackDays: number;
   /** Keyword must have at least this many clicks in the window. */
   minClicks: number;
-  /** ACoS threshold as a ratio (0.3 = 30%). Keyword matches when ACoS is strictly greater. */
-  acosAbove: number;
+  /** Threshold as a ratio (0.3 = 30%). A keyword matches when its cost ratio is strictly greater. */
+  costRatioAbove: number;
   /** Percentage change to apply to the bid, e.g. -10 means "decrease by 10%". */
   bidChangePct: number;
   minBidCents: number;
@@ -68,7 +68,7 @@ export interface DateWindow {
   to: string;
 }
 
-export type SortKey = 'name' | 'spendCents' | 'salesCents' | 'acos';
+export type SortKey = 'name' | 'spendCents' | 'salesCents' | 'costRatio';
 export type SortOrder = 'asc' | 'desc';
 
 /* ---------- GET /api/campaigns ---------- */
@@ -82,7 +82,7 @@ export interface CampaignSummary {
   spendCents: number;
   salesCents: number;
   /** spend / sales for the window, or null when sales are 0. */
-  acos: number | null;
+  costRatio: number | null;
 }
 
 export interface CampaignListResponse {
@@ -96,7 +96,7 @@ export interface KeywordWithMetrics extends Keyword {
   clicks: number;
   spendCents: number;
   salesCents: number;
-  acos: number | null;
+  costRatio: number | null;
 }
 
 export interface KeywordListResponse {
@@ -110,6 +110,11 @@ export interface RuleListResponse {
   rules: Rule[];
 }
 
+/* ---------- POST /api/rules ---------- */
+
+/** Everything in a Rule except `id`, which the server assigns. Response: `201` with the created `Rule`. */
+export type CreateRuleRequest = Omit<Rule, 'id'>;
+
 /* ---------- POST /api/rules/:id/preview ---------- */
 
 export interface BidChange {
@@ -120,7 +125,7 @@ export interface BidChange {
   clicks: number;
   spendCents: number;
   salesCents: number;
-  acos: number | null;
+  costRatio: number | null;
   currentBidCents: number;
   newBidCents: number;
 }
@@ -163,5 +168,7 @@ export interface ApiErrorBody {
   error: {
     code: ErrorCode;
     message: string;
+    /** Only on `VALIDATION_ERROR`: one message per invalid request field, keyed by field name. */
+    fields?: Record<string, string>;
   };
 }

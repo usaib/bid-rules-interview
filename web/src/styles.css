@@ -115,10 +115,13 @@ th button {
 }
 th button:hover { background: none; color: var(--ink); text-decoration: underline; }
 td.text-cell { white-space: normal; min-width: 200px; }
+caption { text-align: left; padding: 8px 12px; font-weight: 600; font-size: 13px; color: var(--ink-2); }
 
 .status { display: inline-flex; align-items: center; gap: 6px; text-transform: capitalize; }
 .status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #9aa3ab; }
 .status-enabled::before { background: #2f9e62; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #9aa3ab; }
+.dot-enabled { background: #2f9e62; }
 .tag {
   display: inline-block; padding: 0 6px; border: 1px solid var(--line); border-radius: 3px;
   font-size: 12px; color: var(--ink-2); background: var(--head);
@@ -133,6 +136,10 @@ td.text-cell { white-space: normal; min-width: 200px; }
   color: var(--ok); background: var(--ok-bg); border: 1px solid #c6e3d1;
   border-left: 3px solid var(--ok); border-radius: 4px; padding: 8px 12px; margin: 0 0 12px;
 }
+.error-text { color: var(--danger); margin: 0 0 12px; }
+.search { position: relative; display: flex; align-items: center; }
+.icon-button { position: absolute; right: 8px; cursor: pointer; color: var(--muted); font-size: 16px; }
+
 .empty {
   background: var(--panel); border: 1px solid var(--line); border-radius: 4px;
   padding: 28px 16px; text-align: center; color: var(--muted); margin: 0;

@@ -10,7 +10,7 @@ import { sortBy } from '../sort';
 export const campaignsRouter = Router();
 
 const listQuery = z.object({
-  sort: z.enum(['name', 'spendCents', 'salesCents', 'acos']).default('name'),
+  sort: z.enum(['name', 'spendCents', 'salesCents', 'costRatio']).default('name'),
   order: z.enum(['asc', 'desc']).default('asc'),
 });
 

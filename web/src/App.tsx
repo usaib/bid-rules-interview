@@ -31,7 +31,7 @@ export function App() {
             ))}
           </nav>
           <div className="topbar-meta">
-            <span>Sponsored Products · US</span>
+            <span>Search ads · US</span>
             <span>Pacific time</span>
           </div>
         </div>

@@ -35,7 +35,7 @@ export const rule = (o: Partial<Rule> = {}): Rule => ({
   campaignId: 'c1',
   lookbackDays: 7,
   minClicks: 10,
-  acosAbove: 0.3,
+  costRatioAbove: 0.3,
   bidChangePct: -10,
   minBidCents: 5,
   maxBidCents: 500,
