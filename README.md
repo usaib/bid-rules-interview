@@ -40,7 +40,8 @@ Use **one** of these small, fast models (Claude Haiku 4.5 preferred):
 - No other AI help: no ChatGPT/Claude in a browser, no Copilot or Cursor Tab autocomplete on top of
   your main assistant.
 - Share your **whole screen** for the full 40 minutes.
-- `AGENTS.md` / `CLAUDE.md` give your assistant some interview ground rules. Leave them as they are.
+- `AGENTS.md`, `CLAUDE.md` and `.claude/` give your assistant some interview ground rules. Leave them as they are.
+  One of them: the assistant does **one task per turn**, so plan how you split the work.
 - At the end you'll export your AI chat history into the repo (see [Rules](#rules)). We read it to
   see how you worked with the AI, so think out loud in your prompts.
 
