@@ -39,7 +39,7 @@ Use **one** of these small, fast models (Claude Haiku 4.5 preferred):
 - Don't switch models or raise the reasoning effort during the interview.
 - No other AI help: no ChatGPT/Claude in a browser, no Copilot or Cursor Tab autocomplete on top of
   your main assistant.
-- Share your **whole screen** for the full hour.
+- Share your **whole screen** for the full 40 minutes.
 - `AGENTS.md` / `CLAUDE.md` give your assistant some interview ground rules. Leave them as they are.
 - At the end you'll export your AI chat history into the repo (see [Rules](#rules)). We read it to
   see how you worked with the AI, so think out loud in your prompts.
@@ -62,7 +62,7 @@ npm run typecheck
 
 ---
 
-## Your tasks (≈45 min, plus a change request)
+## Your tasks (≈30 min, plus a change request)
 
 Work top to bottom. **Nobody is expected to finish everything.** A clean, correct Must + Should beats
 a rushed attempt at all of it. Each task has a one-line hint. There's backend, frontend and both.
@@ -101,7 +101,7 @@ It doesn't follow our accessibility rules, the listing gets slow on big campaign
 sometimes "jump back" to an older query.
 💡 *Hints: try it with only a keyboard. Count your queries. Responses don't always arrive in the order you sent them.*
 
-### 8 · Change request (around minute 30)
+### 8 · Change request (around minute 20)
 We'll hand you a small change request partway through, like a product manager would. Decide where it
 fits in your plan and tell us.
 
@@ -119,7 +119,7 @@ fits in your plan and tell us.
   ```
   Then open a pull request from `solution` into `main` in your repo and send us the link.
   Using Cursor? Export each chat as Markdown into `ai-logs/` before committing.
-- Last 10 minutes: a short chat about what you built, the trade-offs, and what the AI got wrong.
+- Last 8 minutes: a short chat about what you built, the trade-offs, and what the AI got wrong.
 
 ## Repo map
 

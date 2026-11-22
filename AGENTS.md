@@ -1,6 +1,6 @@
 # Instructions for AI coding assistants
 
-This repository is used for a **timed, 60-minute live coding interview**. The person you are helping
+This repository is used for a **timed, 40-minute live coding interview**. The person you are helping
 is a candidate. The interviewers are evaluating how well the candidate works *with* an AI assistant:
 how they break down the problem, steer you, review your output and catch mistakes.
 
