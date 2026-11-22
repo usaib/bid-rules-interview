@@ -1,0 +1,26 @@
+{
+  "name": "Bid Rules interview",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "postCreateCommand": "npm ci && npm i -g @anthropic-ai/claude-code @openai/codex && npm run check",
+  "forwardPorts": [
+    5173,
+    4000
+  ],
+  "portsAttributes": {
+    "4000": {
+      "label": "API",
+      "onAutoForward": "silent"
+    },
+    "5173": {
+      "label": "Web",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vitest.explorer"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "bid-rules-interview",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "shared",
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c blue,magenta \"npm run dev -w server\" \"npm run dev -w web\"",
+    "test": "npm run test -w server && npm run test -w web",
+    "test:server": "npm run test -w server",
+    "test:web": "npm run test -w web",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w web",
+    "check": "node scripts/check-node.mjs && npm run typecheck && npm run test:smoke -w server && npm run test:smoke -w web && echo '\\n✅ Environment ready. See README.md before the interview starts.'",
+    "ai-log": "node scripts/export-ai-log.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "10.0.7"
+  }
+}

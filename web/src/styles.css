@@ -1,0 +1,148 @@
+/*
+ * Plain, dense console styling. Element selectors do most of the work, so new markup
+ * (tables, buttons, selects, alerts) looks right without extra classes.
+ */
+:root {
+  --ink: #1f2429;
+  --ink-2: #4b5560;
+  --muted: #6b7682;
+  --line: #d9dde1;
+  --line-soft: #eceef0;
+  --page: #f4f5f6;
+  --panel: #ffffff;
+  --head: #f7f8f9;
+  --bar: #20272d;
+  --bar-ink: #c9d0d6;
+  --accent: #0f6b4f;
+  --accent-ink: #ffffff;
+  --accent-hover: #0b5640;
+  --danger: #b3261e;
+  --danger-bg: #fdf1f0;
+  --ok: #17663f;
+  --ok-bg: #eef7f1;
+  --focus: #2f6fd6;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink);
+  background: var(--page);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+/* ---------- top bar ---------- */
+.topbar { background: var(--bar); color: var(--bar-ink); }
+.topbar-inner {
+  max-width: 1160px; margin: 0 auto; padding: 0 20px;
+  display: flex; align-items: stretch; gap: 28px; height: 48px;
+}
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand h1 { font-size: 15px; font-weight: 600; margin: 0; color: #fff; letter-spacing: 0; }
+.brand-mark {
+  width: 18px; height: 18px; border-radius: 3px; background: var(--accent);
+  display: inline-block; position: relative;
+}
+.brand-mark::after {
+  content: ''; position: absolute; left: 4px; right: 4px; bottom: 4px; height: 6px;
+  border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+}
+.topbar nav { display: flex; align-items: stretch; gap: 2px; }
+.topbar nav button {
+  border: 0; border-radius: 0; background: none; color: var(--bar-ink);
+  padding: 0 12px; height: auto; font-weight: 500;
+  border-bottom: 2px solid transparent;
+}
+.topbar nav button:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+.topbar nav button[aria-pressed='true'] { color: #fff; border-bottom-color: #4cc38a; }
+.topbar-meta { margin-left: auto; display: flex; align-items: center; gap: 14px; font-size: 12px; }
+.topbar-meta span + span { padding-left: 14px; border-left: 1px solid #3a444d; }
+
+/* ---------- page ---------- */
+main { max-width: 1160px; margin: 0 auto; padding: 20px 20px 48px; }
+.page-head {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+h2 { font-size: 20px; font-weight: 600; margin: 0; }
+.page-head p { margin: 2px 0 0; }
+.muted { color: var(--muted); font-size: 13px; }
+
+.toolbar {
+  display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 4px;
+  padding: 12px; margin-bottom: 12px;
+}
+.toolbar label {
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 12px; font-weight: 600; color: var(--ink-2);
+}
+.rule-summary { margin: -4px 0 12px; font-size: 13px; color: var(--ink-2); }
+
+/* ---------- controls ---------- */
+button, select, input { font: inherit; font-size: 13px; color: var(--ink); }
+button {
+  height: 32px; padding: 0 12px; border-radius: 4px; cursor: pointer;
+  border: 1px solid #c4c9ce; background: var(--panel); font-weight: 500;
+}
+button:hover { background: #f2f4f5; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+button:disabled, button.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+select, input {
+  height: 32px; padding: 0 8px; border-radius: 4px; border: 1px solid #c4c9ce; background: var(--panel);
+  min-width: 220px; font-weight: 400;
+}
+input[type='search'] { min-width: 260px; }
+
+/* ---------- tables ---------- */
+.table-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: var(--panel); font-size: 13px; }
+.table-wrap > table { border: 0; }
+section > table { border: 1px solid var(--line); }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--line-soft); white-space: nowrap; }
+th {
+  background: var(--head); color: var(--ink-2); font-weight: 600; font-size: 12px;
+  border-bottom: 1px solid var(--line); position: sticky; top: 0;
+}
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: #f9fafb; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+th button {
+  height: auto; border: 0; background: none; padding: 0; font: inherit; color: inherit; font-weight: 600;
+}
+th button:hover { background: none; color: var(--ink); text-decoration: underline; }
+td.text-cell { white-space: normal; min-width: 200px; }
+
+.status { display: inline-flex; align-items: center; gap: 6px; text-transform: capitalize; }
+.status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #9aa3ab; }
+.status-enabled::before { background: #2f9e62; }
+.tag {
+  display: inline-block; padding: 0 6px; border: 1px solid var(--line); border-radius: 3px;
+  font-size: 12px; color: var(--ink-2); background: var(--head);
+}
+
+/* ---------- messages ---------- */
+[role='alert'] {
+  color: var(--danger); background: var(--danger-bg); border: 1px solid #f1c9c5;
+  border-left: 3px solid var(--danger); border-radius: 4px; padding: 8px 12px; margin: 0 0 12px;
+}
+[role='status'] {
+  color: var(--ok); background: var(--ok-bg); border: 1px solid #c6e3d1;
+  border-left: 3px solid var(--ok); border-radius: 4px; padding: 8px 12px; margin: 0 0 12px;
+}
+.empty {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 4px;
+  padding: 28px 16px; text-align: center; color: var(--muted); margin: 0;
+}
+.actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+
+@media (max-width: 720px) {
+  .topbar-inner { height: auto; flex-wrap: wrap; gap: 0 16px; padding-top: 8px; }
+  .topbar nav { height: 40px; }
+  .topbar-meta { display: none; }
+  select, input, input[type='search'] { min-width: 0; width: 100%; }
+  .toolbar label { flex: 1 1 100%; }
+}
