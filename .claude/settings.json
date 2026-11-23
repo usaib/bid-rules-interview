@@ -1,10 +1,29 @@
 {
   "model": "claude-haiku-4-5",
+  "availableModels": [
+    "haiku"
+  ],
+  "env": {
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-haiku-4-5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-haiku-4-5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-haiku-4-5",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5"
+  },
+  "permissions": {
+    "deny": [
+      "Agent",
+      "Task",
+      "Workflow"
+    ]
+  },
   "hooks": {
     "UserPromptSubmit": [
       {
         "hooks": [
-          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/one-task-per-turn.mjs\"" }
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/one-task-per-turn.mjs\""
+          }
         ]
       }
     ]

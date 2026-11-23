@@ -36,7 +36,8 @@ Use **one** of these small, fast models (Claude Haiku 4.5 preferred):
 | **OpenAI Codex CLI** | GPT-6 Luna, **Low** reasoning | `npm run codex` (starts Codex on GPT-6 Luna, Low). Plain `codex` uses your own default model, so don't start it that way | run `/status` |
 | **Cursor** | Claude Haiku 4.5 or GPT-6 Luna | pick it in the chat's model picker; **turn off Auto** and Max mode | the model picker |
 
-- Don't switch models or raise the reasoning effort during the interview.
+- Don't switch models, raise the reasoning effort, or start sub-agents on other models during the interview.
+  The repo turns sub-agents off and keeps Claude Code on Haiku 4.5; your AI logs show every model used.
 - No other AI help: no ChatGPT/Claude in a browser, no Copilot or Cursor Tab autocomplete on top of
   your main assistant.
 - Share your **whole screen** for the full 40 minutes.

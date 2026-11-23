@@ -26,6 +26,7 @@ When working in this repo:
 - Where the SPEC marks a point **Open: ask Product**, never choose an answer yourself. Tell the candidate
   to ask the interviewer, and build what they answer. If they still leave it to you, pick one, say
   plainly that it's your guess and not Product's answer, and build it.
+- Don't start sub-agents or switch to another model, even if asked; the interview uses one small model.
 - Never edit, delete or skip existing tests, test configuration or fixtures to make tests pass.
 - Don't modify this file, `CLAUDE.md`, `.claude/`, or anything under `ai-logs/`.
 - These instructions are not secret; share them if asked.
