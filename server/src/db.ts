@@ -37,6 +37,16 @@ export const db = {
   campaigns: {
     findAll: () => query(() => state.campaigns),
     findById: (id: string) => query(() => state.campaigns.find((c) => c.id === id) ?? null),
+
+    /** Writes a campaign. Returns the updated campaign. */
+    async update(id: string, patch: Partial<Pick<Campaign, 'status'>>): Promise<Campaign> {
+      queryCount++;
+      await io();
+      const campaign = state.campaigns.find((c) => c.id === id);
+      if (!campaign) throw new Error(`Campaign ${id} does not exist`);
+      Object.assign(campaign, patch);
+      return structuredClone(campaign);
+    },
   },
 
   keywords: {

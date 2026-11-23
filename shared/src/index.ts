@@ -155,6 +155,22 @@ export interface ApplyResponse {
   applied: AppliedChange[];
 }
 
+/* ---------- PATCH /api/campaigns/:id ---------- */
+
+/** Pause or resume a campaign. Response: `200` with the updated `Campaign`. */
+export interface UpdateCampaignRequest {
+  status: Status;
+}
+
+/* ---------- PATCH /api/keywords/:id ---------- */
+
+/** Set one keyword's bid by hand. Response: `200` with the updated `Keyword`. */
+export interface UpdateBidRequest {
+  bidCents: number;
+  /** The keyword version the user saw. A different current version is a `409 VERSION_CONFLICT`. */
+  expectedVersion: number;
+}
+
 /* ---------- Errors ---------- */
 
 export type ErrorCode =

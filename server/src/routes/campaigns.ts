@@ -3,7 +3,7 @@ import { z } from 'zod';
 import type { CampaignListResponse, CampaignSummary } from '@bidrules/shared';
 import { db } from '../db';
 import { lookbackWindow } from '../dates';
-import { validate } from '../errors';
+import { HttpError, validate } from '../errors';
 import { summarizeCampaign } from '../services/metrics';
 import { sortBy } from '../sort';
 
@@ -28,4 +28,10 @@ campaignsRouter.get('/', async (req, res) => {
 
   const body: CampaignListResponse = { window, campaigns: sortBy(rows, sort, order) };
   res.json(body);
+});
+
+/** PATCH /api/campaigns/:id — pause or resume. See docs/SPEC.md §8. */
+campaignsRouter.patch('/:id', async (_req, _res) => {
+  // TODO(candidate): implement.
+  throw new HttpError(501, 'NOT_IMPLEMENTED', 'PATCH /api/campaigns/:id is not implemented yet');
 });

@@ -15,6 +15,10 @@ You don't need to know anything about advertising. These words are all you need:
 - **Corrected report**: the platform can send a day's numbers again later, with corrections.
   See `DailyMetric.reportedAt`.
 
+**Open points.** Some sections have a list marked **Open: ask Product**. Those are product decisions
+nobody has written down yet. Don't guess them: ask your interviewer, who plays Product. The hidden tests
+check the answers Product gives.
+
 Types for every request/response are in [`shared/src/index.ts`](../shared/src/index.ts). Error responses
 always use the shape in [CONVENTIONS.md](./CONVENTIONS.md#errors).
 
@@ -209,3 +213,59 @@ A reusable table (props are in the file). Once it works, use it for the Keywords
   - `error`: show it with `role="alert"` instead of the rows.
   - No rows (and not loading, no error): one row with a single cell spanning every column, showing
     `emptyMessage`.
+
+## 8. Campaigns page: filter and pause
+
+### `PATCH /api/campaigns/:id`
+Body `UpdateCampaignRequest`: `{ "status": "enabled" | "paused" }`. Response `200` with the updated `Campaign`.
+Invalid body → `400 VALIDATION_ERROR`. Unknown campaign → `404 NOT_FOUND`. `GET /api/campaigns` shows the
+new status right away.
+
+### UI (`web/src/pages/CampaignsPage.tsx`)
+- A select labelled **Show** with the options `All` (value `all`, the default), `Enabled` and `Paused`.
+  It filters the table to campaigns with that status.
+- A new **Actions** column. Each row has a button: `Pause` for an enabled campaign, `Resume` for a paused
+  one. Its accessible name includes the campaign name, e.g. `Pause Holiday Gifts - SP`.
+- The change is sent with `setCampaignStatus` from `api.ts`. While it runs, that row's button is disabled.
+  On success the row shows the new status. On error, show the message with `role="alert"`; the row keeps
+  its old status.
+
+**Open: ask Product**
+- Does pausing (or resuming) need a confirmation step? If yes, what does it say?
+- Should the filter and the sort survive a page reload, or a link sent to a teammate?
+- With **Show: Enabled**, what happens to a row right after you pause it? How does the user know it worked?
+
+## 9. Edit a bid by hand
+
+### `PATCH /api/keywords/:id`
+Body `UpdateBidRequest`: `{ "bidCents": <integer>, "expectedVersion": <positive integer> }`.
+Response `200` with the updated `Keyword` (its `version` goes up by one).
+
+Errors, checked in this order:
+| Case | Status | `code` |
+|---|---|---|
+| Invalid body (missing, not integers) | 400 | `VALIDATION_ERROR` |
+| Unknown keyword | 404 | `NOT_FOUND` |
+| `expectedVersion` isn't the keyword's current version | 409 | `VERSION_CONFLICT` |
+| The bid isn't allowed (see the open point below) | 400 | `VALIDATION_ERROR` with a `fields.bidCents` message |
+
+The version check and the write behave as one step, like §3: if two edits (or an edit and a rule apply)
+were made against the same version, exactly one succeeds and the other gets `409`.
+
+### UI (Keywords page)
+- Each row's bid has an **Edit bid** button. Its accessible name includes the keyword: `Edit bid for gift for dad`.
+- It opens an editor in that row: an input labelled `New bid ($)` holding the current bid in dollars
+  (e.g. `1.25`), with focus in it, and **Save** and **Cancel** buttons. Only one editor is open at a time.
+- Dollars become cents exactly as in the New rule form: at most 2 decimals, otherwise show
+  `Enter an amount like 1.25` and send nothing.
+- **Save** (or Enter) sends `updateKeywordBid` with the keyword's `version` as `expectedVersion`. While
+  saving, Save is disabled; one save sends one request.
+- Success: the editor closes, the row shows the new bid, focus goes back to its Edit bid button, and
+  `Bid updated.` is shown with `role="status"`.
+- **Cancel** or Escape closes the editor without saving and puts focus back on the Edit bid button.
+- `VALIDATION_ERROR`: show `fields.bidCents` under the input; the input gets `aria-invalid="true"` and
+  `aria-describedby` pointing at the message.
+
+**Open: ask Product**
+- Which bids are allowed? Is there a smallest or largest bid, or a limit on how far one edit can move it?
+- What should the user see when someone else changed the bid first (`VERSION_CONFLICT`)?

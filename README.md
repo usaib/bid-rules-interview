@@ -68,13 +68,16 @@ npm run typecheck
 Work top to bottom. **Nobody is expected to finish everything.** A clean, correct Must + Should beats
 a rushed attempt at all of it. Each task has a one-line hint. There's backend, frontend and both.
 
+Some SPEC sections list **Open: ask Product** points. We play Product: ask us, and build what we answer.
+Your assistant will also ask you questions before it codes; answering them well is part of the job.
+
 ### 1 · MUST — Fix support ticket SUP-1432 (backend)
 > "The cost ratio on the Campaigns page doesn't match the ad platform's report for *Holiday Gifts - SP*
 > or *Kitchen Essentials*. It's off by even more when I check in the evening. Also, sorting the table by
 > cost ratio (or spend) doesn't seem to do anything."
 
 There's a failing test for one part of it. Fix the root causes, not the symptoms. There's more than one.
-💡 *Hint: one of the existing tests passes even though the code is wrong. Ask yourself why.*
+💡 *Hint: one of the existing tests passes even though the code is wrong. Ask yourself why. The SPEC glossary matters here.*
 
 ### 2 · MUST — Rule preview (`POST /api/rules/:id/preview`): SPEC §2 (backend)
 Implement `server/src/services/rulesEngine.ts`.
@@ -88,21 +91,29 @@ Wire up the route and the logic (add files under `server/src/services/` as you l
 Finish `web/src/pages/RulesPage.tsx`: preview table, empty state, Apply with all its states.
 💡 *Hint: users double-click, networks fail, and someone else edits bids while you're looking.*
 
-### 5 · STRETCH — New rule form: SPEC §5 and §6 (full stack)
+### 5 · SHOULD — Campaigns page: filter and pause: SPEC §8 (full stack)
+`PATCH /api/campaigns/:id` on the server, then a **Show** filter and Pause / Resume buttons on the Campaigns page.
+💡 *Hint: the SPEC leaves three things open. Ask Product before you build them.*
+
+### 6 · STRETCH — New rule form: SPEC §5 and §6 (full stack)
 `POST /api/rules` on the server, and a form on the Rules page that matches the design in
 [`docs/design/`](docs/design/) on a laptop and on a phone.
 💡 *Hint: dollars typed by a person must become exact cents. A form is for keyboard and screen-reader users too.*
 
-### 6 · STRETCH — Reusable data table: SPEC §7 (frontend)
+### 7 · STRETCH — Reusable data table: SPEC §7 (frontend)
 Finish `web/src/components/DataTable.tsx` (sorting, pages, loading / empty / error), then use it on the Keywords page.
 💡 *Hint: what happens to `null`, to "item 10", and to the array you were given?*
 
-### 7 · STRETCH — Keywords page (frontend + backend)
+### 8 · STRETCH — Keywords page (frontend + backend)
 It doesn't follow our accessibility rules, the listing gets slow on big campaigns, and search results
 sometimes "jump back" to an older query.
 💡 *Hints: try it with only a keyboard. Count your queries. Responses don't always arrive in the order you sent them.*
 
-### 8 · Change request (around minute 20)
+### 9 · STRETCH — Edit a bid by hand: SPEC §9 (full stack)
+`PATCH /api/keywords/:id`, and an inline bid editor on the Keywords page.
+💡 *Hint: two people can edit the same bid. Ask Product what's allowed and what the loser sees.*
+
+### 10 · Change request (around minute 20)
 We'll hand you a small change request partway through, like a product manager would. Decide where it
 fits in your plan and tell us.
 
@@ -132,13 +143,13 @@ server/src/
   clock.ts, dates.ts           "now" + reporting dates (LA time); always use these
   errors.ts                    HttpError, validate(), error format
   sort.ts                      generic sort helper
-  routes/                      campaigns, keywords, rules
+  routes/                      campaigns, keywords, rules, bids
   services/                    metrics, rulesEngine (← you)
 server/test/                   visible tests + fixtures
 web/src/
   api.ts                       typed API client (all fetches go here)
   format.ts                    money / cost ratio formatting
-  pages/                       CampaignsPage, RulesPage (← you), KeywordsPage
+  pages/                       CampaignsPage, RulesPage, KeywordsPage (all ← you)
   components/DataTable.tsx     reusable table (← you, stretch)
 docs/                          SPEC.md, CONVENTIONS.md, design/ (New rule form mock)
 AGENTS.md, CLAUDE.md           ground rules for your AI assistant (don't edit)

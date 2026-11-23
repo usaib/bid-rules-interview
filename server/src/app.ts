@@ -1,5 +1,6 @@
 import express from 'express';
 import { campaignsRouter } from './routes/campaigns';
+import { bidsRouter } from './routes/bids';
 import { keywordsRouter } from './routes/keywords';
 import { rulesRouter } from './routes/rules';
 import { errorHandler, notFoundHandler } from './errors';
@@ -14,6 +15,7 @@ export function createApp() {
 
   app.use('/api/campaigns/:campaignId/keywords', keywordsRouter);
   app.use('/api/campaigns', campaignsRouter);
+  app.use('/api/keywords', bidsRouter);
   app.use('/api/rules', rulesRouter);
 
   app.use(notFoundHandler);

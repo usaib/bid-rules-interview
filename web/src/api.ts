@@ -5,15 +5,19 @@
 import type {
   ApplyRequest,
   ApplyResponse,
+  Campaign,
   CampaignListResponse,
   CreateRuleRequest,
   ErrorCode,
+  Keyword,
   KeywordListResponse,
   PreviewResponse,
   Rule,
   RuleListResponse,
   SortKey,
   SortOrder,
+  Status,
+  UpdateBidRequest,
 } from '@bidrules/shared';
 
 export class ApiError extends Error {
@@ -55,6 +59,20 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 
 export function getCampaigns(sort: SortKey = 'name', order: SortOrder = 'asc') {
   return request<CampaignListResponse>(`/campaigns?sort=${sort}&order=${order}`);
+}
+
+export function setCampaignStatus(campaignId: string, status: Status) {
+  return request<Campaign>(`/campaigns/${encodeURIComponent(campaignId)}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status }),
+  });
+}
+
+export function updateKeywordBid(keywordId: string, body: UpdateBidRequest) {
+  return request<Keyword>(`/keywords/${encodeURIComponent(keywordId)}`, {
+    method: 'PATCH',
+    body: JSON.stringify(body),
+  });
 }
 
 export function searchKeywords(campaignId: string, q: string, signal?: AbortSignal) {
