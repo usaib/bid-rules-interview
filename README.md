@@ -65,6 +65,9 @@ npm run typecheck
 
 ## Your tasks (≈30 min, plus a change request)
 
+> **Coach-mode interview?** If your interviewer said so, do the three tasks in
+> [`docs/COACH-TASKS.md`](docs/COACH-TASKS.md) instead of the list below.
+
 Work top to bottom. **Nobody is expected to finish everything.** A clean, correct Must + Should beats
 a rushed attempt at all of it. Each task has a one-line hint. There's backend, frontend and both.
 
