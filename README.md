@@ -77,7 +77,7 @@ Your assistant will also ask you questions before it codes; answering them well 
 > cost ratio (or spend) doesn't seem to do anything."
 
 There's a failing test for one part of it. Fix the root causes, not the symptoms. There's more than one.
-💡 *Hint: one of the existing tests passes even though the code is wrong. Ask yourself why. The SPEC glossary matters here.*
+💡 *Hint: one of the existing tests passes even though the code is wrong. Ask yourself why. Then read the Glossary at the top of the SPEC: **Reporting day** and **Corrected report** both matter here.*
 
 ### 2 · MUST — Rule preview (`POST /api/rules/:id/preview`): SPEC §2 (backend)
 Implement `server/src/services/rulesEngine.ts`.

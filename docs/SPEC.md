@@ -5,7 +5,7 @@ A **bid rule** looks at recent results and suggests new bids, e.g. *"if a keywor
 last 7 days is above 35% and it has at least 20 clicks, lower its bid by 15%"*. Users **preview** the
 changes, then **apply** them.
 
-You don't need to know anything about advertising. These words are all you need:
+**Glossary.** You don't need to know anything about advertising. These words are all you need:
 - **Campaign**: a group of keywords with a daily budget. It is `enabled` or `paused`.
 - **Keyword**: a search term the ad shows for, e.g. "gift for dad". It is `enabled` or `paused`.
 - **Bid**: the most we pay for one click on a keyword, in integer cents.
