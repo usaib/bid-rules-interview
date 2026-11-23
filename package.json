@@ -17,7 +17,8 @@
     "test:web": "npm run test -w web",
     "typecheck": "npm run typecheck -w server && npm run typecheck -w web",
     "check": "node scripts/check-node.mjs && npm run typecheck && npm run test:smoke -w server && npm run test:smoke -w web && echo '\\n✅ Environment ready. See README.md before the interview starts.'",
-    "ai-log": "node scripts/export-ai-log.mjs"
+    "ai-log": "node scripts/export-ai-log.mjs",
+    "codex": "codex -m gpt-6-luna -c model_reasoning_effort=low"
   },
   "devDependencies": {
     "concurrently": "10.0.7"

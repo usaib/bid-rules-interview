@@ -33,7 +33,7 @@ Use **one** of these small, fast models (Claude Haiku 4.5 preferred):
 | Tool | Model | How | At the start, show us |
 |---|---|---|---|
 | **Claude Code** | Claude Haiku 4.5 | `claude --model claude-haiku-4-5` (already the default in this repo) | run `/status` |
-| **OpenAI Codex CLI** | GPT-6 Luna, **Low** reasoning | `codex -m gpt-6-luna -c model_reasoning_effort=low`, or `/model` → gpt-6-luna → Low | run `/status` |
+| **OpenAI Codex CLI** | GPT-6 Luna, **Low** reasoning | `npm run codex` (starts Codex on GPT-6 Luna, Low). Plain `codex` uses your own default model, so don't start it that way | run `/status` |
 | **Cursor** | Claude Haiku 4.5 or GPT-6 Luna | pick it in the chat's model picker; **turn off Auto** and Max mode | the model picker |
 
 - Don't switch models or raise the reasoning effort during the interview.
